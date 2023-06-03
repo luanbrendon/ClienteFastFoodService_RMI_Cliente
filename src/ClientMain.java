@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -13,6 +14,15 @@ public class ClientMain {
     private static FastFoodService fastFoodService;
 
     public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                createAndShowGUI();
+            }
+        });
+    }
+
+    private static void createAndShowGUI() {
         try {
             // Localizar o registro RMI
             Registry registry = LocateRegistry.getRegistry("localhost", 4444);
@@ -28,6 +38,20 @@ public class ClientMain {
             JFrame frame = new JFrame("Fast Food App");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(400, 300);
+            frame.setLocationRelativeTo(null); //centralizar a janela no centro
+
+            //criação do painel principal
+            JPanel mainPanel = new JPanel(new BorderLayout());
+
+            //criação da lista de itens disponíveis
+            List<Produto> itensDisponiveis = fastFoodService.getItensDisponiveis();
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            for (Produto produto : itensDisponiveis) {
+                listModel.addElement(produto.getNome() + " - R$ " + produto.getPreco());
+            }
+            JList<String> itemList = new JList<>(listModel);
+            JScrollPane scrollPane = new JScrollPane(itemList);
+            mainPanel.add(scrollPane, BorderLayout.CENTER);
 
             // Criação dos componentes
             JButton selectItemButton = new JButton("Selecionar item");
@@ -36,24 +60,17 @@ public class ClientMain {
             JButton exitButton = new JButton("Sair do aplicativo");
 
             // Configuração dos layouts
-            frame.setLayout(new GridLayout(4, 1));
-            JPanel panel1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            JPanel panel2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            JPanel panel3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            JPanel panel4 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            panel1.add(selectItemButton);
-            panel2.add(viewSelectedItemsButton);
-            panel3.add(closeOrderButton);
-            panel4.add(exitButton);
-            frame.add(panel1);
-            frame.add(panel2);
-            frame.add(panel3);
-            frame.add(panel4);
+            JPanel buttonPanel = new JPanel(new GridLayout(4, 1));
+            buttonPanel.add(selectItemButton);
+            buttonPanel.add(viewSelectedItemsButton);
+            buttonPanel.add(closeOrderButton);
+            buttonPanel.add(exitButton);
+            mainPanel.add(buttonPanel, BorderLayout.EAST);
 
             // Ação do botão "Selecionar item"
             selectItemButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    selectItem();
+                    selectItem(itemList.getSelectedValue());
                 }
             });
 
@@ -78,6 +95,9 @@ public class ClientMain {
                 }
             });
 
+            //Adicionar o painel principal à janela
+            frame.add(mainPanel);
+
             // Exibição da janela
             frame.setVisible(true);
         } catch (Exception e) {
@@ -85,28 +105,23 @@ public class ClientMain {
         }
     }
 
-    private static void selectItem() {
-        try {
-            // Obter os itens disponíveis do serviço remoto
-            List<Produto> itensDisponiveis = fastFoodService.getItensDisponiveis();
-
-            // Exibir uma caixa de diálogo com os itens disponíveis para seleção
-            String[] options = new String[itensDisponiveis.size()];
-            for (int i = 0; i < itensDisponiveis.size(); i++) {
-                Produto produto = itensDisponiveis.get(i);
-                options[i] = produto.getNome() + " - R$ " + produto.getPreco();
+    private static void selectItem(String selectedItem) {
+        if (selectedItem != null) {
+            try {
+                // Obter os itens disponíveis do serviço remoto
+                List<Produto> itensDisponiveis = fastFoodService.getItensDisponiveis();
+                for (Produto produto : itensDisponiveis) {
+                    if ((produto.getNome() + " - R$ " + produto.getPreco()).equals(selectedItem)) {
+                        fastFoodService.selectItem(produto);
+                        selectedItems.add(produto);
+                        totalAmount += produto.getPreco();
+                        JOptionPane.showMessageDialog(null, "Item selecionado: " + produto.getNome(), "Fast Food App - Item Selecionado", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            int choice = JOptionPane.showOptionDialog(null, "Selecione um item:", "Fast Food App - Seleção de Item", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-            if (choice != JOptionPane.CLOSED_OPTION) {
-                Produto produtoEscolhido = itensDisponiveis.get(choice);
-                fastFoodService.selectItem(produtoEscolhido);
-                selectedItems.add(produtoEscolhido);
-                totalAmount += produtoEscolhido.getPreco();
-                JOptionPane.showMessageDialog(null, "Item selecionado: " + produtoEscolhido.getNome(), "Fast Food App - Item Selecionado", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -136,10 +151,15 @@ public class ClientMain {
             }
 
             if (amountPaid >= totalAmount) {
-                double change = amountPaid - totalAmount;
-                JOptionPane.showMessageDialog(null, "Troco: R$ " + change + "\nObrigado pela compra!", "Fast Food App - Fechar Pedido", JOptionPane.INFORMATION_MESSAGE);
-                selectedItems.clear();
-                totalAmount = 0.0;
+                try {
+                    fastFoodService.pay(amountPaid); // chamada do metodo remoto pay
+                    double change = amountPaid - totalAmount;
+                    JOptionPane.showMessageDialog(null, "Troco: R$ " + change + "\nObrigado pela compra!", "Fast Food App - Fechar Pedido", JOptionPane.INFORMATION_MESSAGE);
+                    selectedItems.clear();
+                    totalAmount = 0.0;
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Valor insuficiente. Por favor, pague o valor total da compra.", "Fast Food App - Fechar Pedido", JOptionPane.WARNING_MESSAGE);
             }
