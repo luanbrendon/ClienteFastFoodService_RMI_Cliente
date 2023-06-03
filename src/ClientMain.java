@@ -1,93 +1,171 @@
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.List;
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ClientMain {
+    private static FastFoodService fastFoodService;
+    private static JFrame frame;
+    private static JTextArea outputTextArea;
+
     public static void main(String[] args) {
         try {
-            //Localizar o registro RMI
+            // Localizar o registro RMI
             Registry registry = LocateRegistry.getRegistry("localhost", 4444);
 
-            //obter a referência do serviço remoto
-            FastFoodService fastFoodService = (FastFoodService) registry.lookup("FastFoodService");
+            // Obter a referência do serviço remoto
+            fastFoodService = (FastFoodService) registry.lookup("FastFoodService");
 
-            // Loop principal do aplicativo
-            boolean exitApp = false;
-            while (!exitApp) {
-                // Exibir o menu principal
-                System.out.println("=== Fast Food App ===");
-                System.out.println("Selecione uma opção:");
-                System.out.println("1. Ver itens disponíveis");
-                System.out.println("2. Selecionar item");
-                System.out.println("3. Ver itens selecionados");
-                System.out.println("4. Fechar pedido");
-                System.out.println("5. Sair do aplicativo");
-
-                // Ler a opção escolhida pelo usuário
-                Scanner scanner = new Scanner(System.in);
-                int choice = scanner.nextInt();
-
-                switch (choice) {
-                    case 1:
-                        // Ver itens disponíveis
-                        List<Produto> itensDisponiveis = fastFoodService.getItensDisponiveis();
-                        System.out.println("Itens disponíveis:");
-                        for (int i = 0; i < itensDisponiveis.size(); i++) {
-                            Produto produto = itensDisponiveis.get(i);
-                            System.out.println((i + 1) + ". " + produto.getNome() + " - R$ " + produto.getPreco());
-                        }
-                        break;
-                    case 2:
-                        // Selecionar item
-                        List<Produto> itensDisponiveis2 = fastFoodService.getItensDisponiveis();
-                        System.out.println("Selecione um item:");
-                        for (int i = 0; i < itensDisponiveis2.size(); i++) {
-                            Produto produto = itensDisponiveis2.get(i);
-                            System.out.println((i + 1) + ". " + produto.getNome() + " - R$ " + produto.getPreco());
-                        }
-                        int itemChoice = scanner.nextInt();
-                        Produto produtoEscolhido = itensDisponiveis2.get(itemChoice - 1);
-                        fastFoodService.selectItem(produtoEscolhido);
-                        break;
-                    case 3:
-                        // Ver itens selecionados
-                        List<Produto> selectedItems = fastFoodService.getSelectedItems();
-                        if (selectedItems.isEmpty()) {
-                            System.out.println("Nenhum item selecionado.");
-                        } else {
-                            System.out.println("Itens selecionados:");
-                            for (Produto produto : selectedItems) {
-                                System.out.println(produto.getNome() + " - R$ " + produto.getPreco());
-                            }
-                        }
-                        break;
-                    case 4:
-                        // Fechar pedido
-                        List<Produto> selectedItems2 = fastFoodService.getSelectedItems();
-                        if (selectedItems2.isEmpty()) {
-                            System.out.println("Nenhum item selecionado. Por favor, selecione pelo menos um item antes de fechar o pedido.");
-                        } else {
-                            double totalAmount = fastFoodService.getTotalAmount();
-                            System.out.println("Total da compra: R$ " + totalAmount);
-                            System.out.println("Digite o valor a ser pago:");
-                            double amountPaid = scanner.nextDouble();
-                            fastFoodService.pay(amountPaid);
-                        }
-                        break;
-                    case 5:
-                        // Sair do aplicativo
-                        exitApp = true;
-                        break;
-                    default:
-                        // Opção inválida
-                        System.out.println("Opção inválida. Por favor, selecione uma opção válida.");
-                        break;
-                }
-            }
+            // Configurar a interface gráfica
+            SwingUtilities.invokeLater(() -> {
+                createAndShowGUI();
+            });
         } catch (Exception e) {
-            System.err.println("Erro no cliente: " + e.toString());
             e.printStackTrace();
         }
     }
+
+    private static void createAndShowGUI() {
+        // Configurar a janela
+        frame = new JFrame("Fast Food App");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLayout(new BorderLayout());
+
+        // area de texto para exibir a saída
+        outputTextArea = new JTextArea();
+        outputTextArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(outputTextArea);
+        frame.add(scrollPane, BorderLayout.CENTER);
+
+        // Painel de botões
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+
+        // Botão para ver itens disponíveis
+        JButton viewItemsButton = new JButton("Ver Itens Disponíveis");
+        viewItemsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                viewAvailableItems();
+            }
+        });
+        buttonPanel.add(viewItemsButton);
+
+        // Botão para selecionar item
+        JButton selectItemButton = new JButton("Selecionar Item");
+        selectItemButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                selectItem();
+            }
+        });
+        buttonPanel.add(selectItemButton);
+
+        // Botão para ver itens selecionados
+        JButton viewSelectedItemsButton = new JButton("Ver Itens Selecionados");
+        viewSelectedItemsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                viewSelectedItems();
+            }
+        });
+        buttonPanel.add(viewSelectedItemsButton);
+
+        // Botão para fechar pedido
+        JButton closeOrderButton = new JButton("Fechar Pedido");
+        closeOrderButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                closeOrder();
+            }
+        });
+        buttonPanel.add(closeOrderButton);
+
+        // Adicionar o painel de botões à janela
+        frame.add(buttonPanel, BorderLayout.SOUTH);
+
+        // Exibir a janela
+        frame.setVisible(true);
+    }
+
+    private static void viewAvailableItems() {
+        try {
+            List<Produto> availableItems = fastFoodService.getItensDisponiveis();
+            StringBuilder itemsText = new StringBuilder("Itens disponíveis:\n");
+            for (int i = 0; i < availableItems.size(); i++) {
+                Produto produto = availableItems.get(i);
+                itemsText.append((i + 1)).append(". ").append(produto.getNome()).append(" - R$ ").append(produto.getPreco()).append("\n");
+            }
+            outputTextArea.setText(itemsText.toString());
+        } catch (Exception e) {
+            outputTextArea.setText("Erro ao obter itens disponíveis: " + e.getMessage());
+        }
+    }
+
+    private static void selectItem() {
+        try {
+            List<Produto> availableItems = fastFoodService.getItensDisponiveis();
+            String[] itemNames = availableItems.stream().map(Produto::getNome).toArray(String[]::new);
+            String selectedItem = (String) JOptionPane.showInputDialog(frame, "Selecione um item:", "Selecionar Item", JOptionPane.QUESTION_MESSAGE, null, itemNames, itemNames[0]);
+
+            if (selectedItem != null) {
+                int selectedIndex = -1;
+                for (int i = 0; i < itemNames.length; i++) {
+                    if (itemNames[i].equals(selectedItem)) {
+                        selectedIndex = i;
+                        break;
+                    }
+                }
+                if (selectedIndex != -1) {
+                    Produto produtoEscolhido = availableItems.get(selectedIndex);
+                    fastFoodService.selectItem(produtoEscolhido);
+                    outputTextArea.setText("Item selecionado: " + produtoEscolhido.getNome());
+                }
+            }
+        } catch (Exception e) {
+            outputTextArea.setText("Erro ao selecionar item: " + e.getMessage());
+        }
+    }
+
+
+    private static void viewSelectedItems() {
+        try {
+            List<Produto> selectedItems = fastFoodService.getSelectedItems();
+            if (selectedItems.isEmpty()) {
+                outputTextArea.setText("Nenhum item selecionado.");
+            } else {
+                StringBuilder itemsText = new StringBuilder("Itens selecionados:\n");
+                for (Produto produto : selectedItems) {
+                    itemsText.append(produto.getNome()).append(" - R$ ").append(produto.getPreco()).append("\n");
+                }
+                outputTextArea.setText(itemsText.toString());
+            }
+        } catch (Exception e) {
+            outputTextArea.setText("Erro ao obter itens selecionados: " + e.getMessage());
+        }
+    }
+
+    private static void closeOrder() {
+        try {
+            List<Produto> selectedItems = fastFoodService.getSelectedItems();
+            if (selectedItems.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Nenhum item selecionado. Por favor, selecione pelo menos um item antes de fechar o pedido.", "Erro", JOptionPane.ERROR_MESSAGE);
+            } else {
+                double totalAmount = fastFoodService.getTotalAmount();
+                String amountPaidString = JOptionPane.showInputDialog(frame, "Total da compra: R$ " + totalAmount + "\nDigite o valor a ser pago:");
+
+                if (amountPaidString != null && !amountPaidString.isEmpty()) {
+                    try {
+                        double amountPaid = Double.parseDouble(amountPaidString);
+                        fastFoodService.pay(amountPaid); // Chamada do método pay() no serviço remoto
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(frame, "Valor pago inválido. Certifique-se de digitar um valor numérico válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(frame, "Erro ao fechar o pedido: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 }
