@@ -1,4 +1,4 @@
-
+import javax.swing.*;
 import java.util.ArrayList;
 
 /*
@@ -208,30 +208,29 @@ public class LoginClient extends javax.swing.JFrame {
         boolean ingressou = false;
         
         usuarios.get(0);
-        
-        for(int i=0; i<usuarios.size();i++)
-        {
-            if(usuario.equals(usuarios.get(i).getUsuario()))
-            {
-                if(senha.equals(usuarios.get(i).getSenha()))
-                {
+
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuario.equals(usuarios.get(i).getUsuario())) {
+                if (senha.equals(usuarios.get(i).getSenha())) {
                     statusTexto.setText("Login realizado com sucesso...");
                     ingressou = true;
-                    //FastFoodService janela2 = new FastFoodService();
-                    //janela2.setVisible(true);
-                    this.setVisible(false);
+
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            ClientMain.createAndShowGUI();  // Chama o método createAndShowGUI da classe ClientMain
+                        }
+                    });
+
+                    this.dispose();  // Fecha a tela de login
                     break;
-                }
-                else
-                {
-                statusTexto.setText("Senha incorreta...");
-                ingressou = true;
-                break;
+                } else {
+                    statusTexto.setText("Senha incorreta...");
+                    ingressou = true;
+                    break;
                 }
             }
         }
-        if(ingressou==false)
-        {
+        if (ingressou == false) {
             statusTexto.setText("Dados incorretos...");
         }
     }//GEN-LAST:event_botaoLoginActionPerformed

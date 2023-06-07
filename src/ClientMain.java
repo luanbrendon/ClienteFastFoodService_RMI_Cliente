@@ -8,6 +8,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ClientMain {
     private static List<Produto> selectedItems;
     private static double totalAmount;
@@ -22,7 +23,7 @@ public class ClientMain {
         });
     }
 
-    private static void createAndShowGUI() {
+    public static void createAndShowGUI() {
         try {
             // Localizar o registro RMI
             Registry registry = LocateRegistry.getRegistry("localhost", 4444);
@@ -35,10 +36,10 @@ public class ClientMain {
             totalAmount = 0.0;
 
             // Criação da janela principal
-            JFrame frame = new JFrame("Fast Food App");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(400, 300);
-            frame.setLocationRelativeTo(null); //centralizar a janela no centro
+            JFrame novaJanela = new JFrame("Fast Food App");
+            novaJanela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            novaJanela.setSize(800, 600);
+            novaJanela.setLocationRelativeTo(null); //centralizar a janela no centro
 
             //criação do painel principal
             JPanel mainPanel = new JPanel(new BorderLayout());
@@ -96,10 +97,10 @@ public class ClientMain {
             });
 
             //Adicionar o painel principal à janela
-            frame.add(mainPanel);
+            novaJanela.add(mainPanel);
 
             // Exibição da janela
-            frame.setVisible(true);
+            novaJanela.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,11 +1,10 @@
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.List;
 
 public interface FastFoodService extends Remote {
-    List<Produto> getItensDisponiveis() throws RemoteException;
-    void selectItem(Produto produto) throws RemoteException;
-    List<Produto> getSelectedItems() throws RemoteException;
-    double getTotalAmount() throws RemoteException;
-    void pay(double amountPaid) throws RemoteException;
+    List<Produto> getItensDisponiveis() throws java.rmi.RemoteException;
+    void selectItem(Produto produto) throws java.rmi.RemoteException;
+    List<Produto> getSelectedItems() throws java.rmi.RemoteException;
+    double getTotalAmount() throws java.rmi.RemoteException;
+    void pay(double amountPaid) throws java.rmi.RemoteException;
 }
