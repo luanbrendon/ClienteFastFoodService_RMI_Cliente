@@ -56,16 +56,19 @@ public class LoginClient extends javax.swing.JFrame {
 
         campoLogin.setBackground(new java.awt.Color(255, 255, 255));
         campoLogin.setForeground(new java.awt.Color(0, 0, 0));
+        campoLogin.setToolTipText("Digite seu nome de usuario");
 
         textoSenha.setForeground(new java.awt.Color(0, 0, 0));
         textoSenha.setText("Senha:");
 
         campoSenha.setBackground(new java.awt.Color(255, 255, 255));
         campoSenha.setForeground(new java.awt.Color(0, 0, 0));
+        campoSenha.setToolTipText("Digite sua senha");
 
         botaoLogin.setBackground(new java.awt.Color(255, 255, 255));
         botaoLogin.setForeground(new java.awt.Color(0, 0, 0));
         botaoLogin.setText("Login");
+        botaoLogin.setToolTipText("Realizar login");
         botaoLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoLoginActionPerformed(evt);
@@ -91,6 +94,7 @@ public class LoginClient extends javax.swing.JFrame {
         botaoLimpar.setBackground(new java.awt.Color(255, 255, 255));
         botaoLimpar.setForeground(new java.awt.Color(0, 0, 0));
         botaoLimpar.setText("Limpar");
+        botaoLimpar.setToolTipText("Limpar os campos");
         botaoLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoLimparActionPerformed(evt);
@@ -100,6 +104,7 @@ public class LoginClient extends javax.swing.JFrame {
         botaoSair.setBackground(new java.awt.Color(255, 255, 255));
         botaoSair.setForeground(new java.awt.Color(0, 0, 0));
         botaoSair.setText("Sair");
+        botaoSair.setToolTipText("Sair do aplicativo");
         botaoSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSairActionPerformed(evt);
