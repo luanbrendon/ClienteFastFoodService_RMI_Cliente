@@ -31,6 +31,8 @@ public class ClientMain {
             // Obter a referência do serviço remoto
             fastFoodService = (FastFoodService) registry.lookup("FastFoodService");
 
+
+
             // Inicializar a lista de itens selecionados e o valor total
             selectedItems = new ArrayList<>();
             totalAmount = 0.0;

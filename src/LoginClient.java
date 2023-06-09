@@ -214,6 +214,7 @@ public class LoginClient extends javax.swing.JFrame {
                 if (senha.equals(usuarios.get(i).getSenha())) {
                     statusTexto.setText("Login realizado com sucesso...");
                     ingressou = true;
+                   // FastFoodService.logado("Usuário logado: " + usuario);
 
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
