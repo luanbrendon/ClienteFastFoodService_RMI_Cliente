@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,13 +17,6 @@ public class LoginClient extends javax.swing.JFrame {
     /**
      * Creates new form LoginClient
      */
-    private String[][] dadosLogin = {
-        {"adm", "adm"},
-        {"Allan", "123"},
-        {"Alvaro", "123"},
-        {"Luan", "123"},
-        {"Thor", "123"}
-    };
     public LoginClient() {
         initComponents();
     }
@@ -194,64 +186,38 @@ public class LoginClient extends javax.swing.JFrame {
             return (FastFoodService) registry.lookup("FastFoodService");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RemoteException("Failed to connect to the RMI server.");
+            throw new RemoteException("Falha ao conectar-se ao servidor RMI.");
         }
     }
 
     private void botaoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLoginActionPerformed
-        
-        ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-              
-        Usuario admin = new Usuario("admin", "admin");
-        Usuario allan = new Usuario("Allan", "Allan123");
-        Usuario alvaro = new Usuario("Alvaro", "Alvaro123");
-        Usuario luan = new Usuario("Luan", "Luan123");
-        Usuario thor = new Usuario("Thor", "Thor123");
-        
-        usuarios.add(admin);
-        usuarios.add(allan);
-        usuarios.add(alvaro);
-        usuarios.add(luan);
-        usuarios.add(thor);
+
+
         
         String usuario = campoLogin.getText();
         String senha = String.valueOf(campoSenha.getPassword());
-        
-        boolean ingressou = false;
-        
-        usuarios.get(0);
+        try {
+            FastFoodService fastFoodService = connectToServerRMI();
+            boolean loginValido = fastFoodService.verificarLogin(usuario, senha);
 
-        for (int i = 0; i < usuarios.size(); i++) {
-            if (usuario.equals(usuarios.get(i).getUsuario())) {
-                if (senha.equals(usuarios.get(i).getSenha())) {
-                    statusTexto.setText("Login realizado com sucesso...");
-                    ingressou = true;
-                    try {
-                        FastFoodService fastFoodService  = connectToServerRMI();
+            if (loginValido) {
+                statusTexto.setText("Login realizado com sucesso...");
 
-
-                    SwingUtilities.invokeLater(new Runnable() {
-                        public void run() {
-                            ClientMain.createAndShowGUI();  // Chama o método createAndShowGUI da classe ClientMain
-                        }
-                    });
-
-                    this.dispose();  // Fecha a tela de login
-                    break;
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        ClientMain.createAndShowGUI();  // Chama o método createAndShowGUI da classe ClientMain
                     }
-                } else {
-                    statusTexto.setText("Senha incorreta...");
-                    ingressou = true;
-                    break;
-                }
+                });
+
+                this.dispose();  // Fecha a tela de login
+            } else {
+                statusTexto.setText("Dados incorretos...");
             }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            statusTexto.setText("Falha ao conectar-se ao servidor RMI.");
         }
-        if (ingressou == false) {
-            statusTexto.setText("Dados incorretos...");
-        }
-    }//GEN-LAST:event_botaoLoginActionPerformed
+    }
 
     private void checkboxSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxSenhaActionPerformed
         if(checkboxSenha.isSelected()){
