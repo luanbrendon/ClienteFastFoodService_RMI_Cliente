@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 /*
@@ -185,6 +188,15 @@ public class LoginClient extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private FastFoodService connectToServerRMI() throws RemoteException {
+        try {
+            Registry registry = LocateRegistry.getRegistry("localhost", 4444);
+            return (FastFoodService) registry.lookup("FastFoodService");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RemoteException("Failed to connect to the RMI server.");
+        }
+    }
 
     private void botaoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLoginActionPerformed
         
@@ -214,7 +226,9 @@ public class LoginClient extends javax.swing.JFrame {
                 if (senha.equals(usuarios.get(i).getSenha())) {
                     statusTexto.setText("Login realizado com sucesso...");
                     ingressou = true;
-                   // FastFoodService.logado("Usuário logado: " + usuario);
+                    try {
+                        FastFoodService fastFoodService  = connectToServerRMI();
+
 
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
@@ -224,6 +238,9 @@ public class LoginClient extends javax.swing.JFrame {
 
                     this.dispose();  // Fecha a tela de login
                     break;
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     statusTexto.setText("Senha incorreta...");
                     ingressou = true;

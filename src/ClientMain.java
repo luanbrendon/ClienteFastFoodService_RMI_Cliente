@@ -8,7 +8,6 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ClientMain {
     private static List<Produto> selectedItems;
     private static double totalAmount;
@@ -24,6 +23,79 @@ public class ClientMain {
     }
 
     public static void createAndShowGUI() {
+        // Inicializar a lista de itens selecionados e o valor total
+        selectedItems = new ArrayList<>();
+        totalAmount = 0.0;
+
+        // Criação da janela principal
+        JFrame novaJanela = new JFrame("Fast Food App");
+        novaJanela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        novaJanela.setSize(800, 600);
+        novaJanela.setLocationRelativeTo(null); //centralizar a janela no centro
+
+        //criação do painel principal
+        JPanel mainPanel = new JPanel(new BorderLayout());
+
+        //criação da lista de itens disponíveis
+        List<Produto> itensDisponiveis = getItensDisponiveis();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        for (Produto produto : itensDisponiveis) {
+            listModel.addElement(produto.getNome() + " - R$ " + produto.getPreco());
+        }
+        JList<String> itemList = new JList<>(listModel);
+        JScrollPane scrollPane = new JScrollPane(itemList);
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+
+        // Criação dos componentes
+        JButton selectItemButton = new JButton("Selecionar item");
+        JButton viewSelectedItemsButton = new JButton("Ver itens selecionados");
+        JButton closeOrderButton = new JButton("Fechar pedido");
+        JButton exitButton = new JButton("Sair do aplicativo");
+
+        // Configuração dos layouts
+        JPanel buttonPanel = new JPanel(new GridLayout(4, 1));
+        buttonPanel.add(selectItemButton);
+        buttonPanel.add(viewSelectedItemsButton);
+        buttonPanel.add(closeOrderButton);
+        buttonPanel.add(exitButton);
+        mainPanel.add(buttonPanel, BorderLayout.EAST);
+
+        // Ação do botão "Selecionar item"
+        selectItemButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                selectItem(itemList.getSelectedValue());
+            }
+        });
+
+        // Ação do botão "Ver itens selecionados"
+        viewSelectedItemsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                viewSelectedItems();
+            }
+        });
+
+        // Ação do botão "Fechar pedido"
+        closeOrderButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                closeOrder();
+            }
+        });
+
+        // Ação do botão "Sair do aplicativo"
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        //Adicionar o painel principal à janela
+        novaJanela.add(mainPanel);
+
+        // Exibição da janela
+        novaJanela.setVisible(true);
+    }
+
+    private static List<Produto> getItensDisponiveis() {
         try {
             // Localizar o registro RMI
             Registry registry = LocateRegistry.getRegistry("localhost", 4444);
@@ -31,88 +103,18 @@ public class ClientMain {
             // Obter a referência do serviço remoto
             fastFoodService = (FastFoodService) registry.lookup("FastFoodService");
 
-
-
-            // Inicializar a lista de itens selecionados e o valor total
-            selectedItems = new ArrayList<>();
-            totalAmount = 0.0;
-
-            // Criação da janela principal
-            JFrame novaJanela = new JFrame("Fast Food App");
-            novaJanela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            novaJanela.setSize(800, 600);
-            novaJanela.setLocationRelativeTo(null); //centralizar a janela no centro
-
-            //criação do painel principal
-            JPanel mainPanel = new JPanel(new BorderLayout());
-
-            //criação da lista de itens disponíveis
-            List<Produto> itensDisponiveis = fastFoodService.getItensDisponiveis();
-            DefaultListModel<String> listModel = new DefaultListModel<>();
-            for (Produto produto : itensDisponiveis) {
-                listModel.addElement(produto.getNome() + " - R$ " + produto.getPreco());
-            }
-            JList<String> itemList = new JList<>(listModel);
-            JScrollPane scrollPane = new JScrollPane(itemList);
-            mainPanel.add(scrollPane, BorderLayout.CENTER);
-
-            // Criação dos componentes
-            JButton selectItemButton = new JButton("Selecionar item");
-            JButton viewSelectedItemsButton = new JButton("Ver itens selecionados");
-            JButton closeOrderButton = new JButton("Fechar pedido");
-            JButton exitButton = new JButton("Sair do aplicativo");
-
-            // Configuração dos layouts
-            JPanel buttonPanel = new JPanel(new GridLayout(4, 1));
-            buttonPanel.add(selectItemButton);
-            buttonPanel.add(viewSelectedItemsButton);
-            buttonPanel.add(closeOrderButton);
-            buttonPanel.add(exitButton);
-            mainPanel.add(buttonPanel, BorderLayout.EAST);
-
-            // Ação do botão "Selecionar item"
-            selectItemButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    selectItem(itemList.getSelectedValue());
-                }
-            });
-
-            // Ação do botão "Ver itens selecionados"
-            viewSelectedItemsButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    viewSelectedItems();
-                }
-            });
-
-            // Ação do botão "Fechar pedido"
-            closeOrderButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    closeOrder();
-                }
-            });
-
-            // Ação do botão "Sair do aplicativo"
-            exitButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    System.exit(0);
-                }
-            });
-
-            //Adicionar o painel principal à janela
-            novaJanela.add(mainPanel);
-
-            // Exibição da janela
-            novaJanela.setVisible(true);
+            // Chamar o método remoto para obter a lista de itens disponíveis
+            return fastFoodService.getItensDisponiveis();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return new ArrayList<>();
     }
 
     private static void selectItem(String selectedItem) {
         if (selectedItem != null) {
             try {
-                // Obter os itens disponíveis do serviço remoto
-                List<Produto> itensDisponiveis = fastFoodService.getItensDisponiveis();
+                List<Produto> itensDisponiveis = getItensDisponiveis();
                 for (Produto produto : itensDisponiveis) {
                     if ((produto.getNome() + " - R$ " + produto.getPreco()).equals(selectedItem)) {
                         fastFoodService.selectItem(produto);
@@ -155,7 +157,7 @@ public class ClientMain {
 
             if (amountPaid >= totalAmount) {
                 try {
-                    fastFoodService.pay(amountPaid); // chamada do metodo remoto pay
+                    fastFoodService.pay(amountPaid);
                     double change = amountPaid - totalAmount;
                     JOptionPane.showMessageDialog(null, "Troco: R$ " + change + "\nObrigado pela compra!", "Fast Food App - Fechar Pedido", JOptionPane.INFORMATION_MESSAGE);
                     selectedItems.clear();
