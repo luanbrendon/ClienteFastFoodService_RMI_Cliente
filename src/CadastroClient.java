@@ -31,8 +31,9 @@ public class CadastroClient extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        textoTitulo3 = new javax.swing.JLabel();
+        textoTitulo2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        textoCadastro = new javax.swing.JLabel();
         textoNomeUsuario = new javax.swing.JLabel();
         campoNomeUsuario = new javax.swing.JTextField();
         textoSenha = new javax.swing.JLabel();
@@ -52,15 +53,24 @@ public class CadastroClient extends javax.swing.JFrame {
         textoStatus = new javax.swing.JLabel();
         checkboxSenha = new javax.swing.JCheckBox();
         botaoLimpar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        textoTitulo4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        textoTitulo5 = new javax.swing.JLabel();
+
+        textoTitulo3.setFont(new java.awt.Font("Cooper Black", 0, 36)); // NOI18N
+        textoTitulo3.setForeground(new java.awt.Color(255, 255, 255));
+        textoTitulo3.setText("TELA DE LOGIN");
+
+        textoTitulo2.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        textoTitulo2.setForeground(new java.awt.Color(255, 255, 255));
+        textoTitulo2.setText("All rights reserved for BurguerBOT FastFood Company LTDA");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-
-        textoCadastro.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        textoCadastro.setForeground(new java.awt.Color(0, 0, 0));
-        textoCadastro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        textoCadastro.setText("Cadastro Delivery");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         textoNomeUsuario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         textoNomeUsuario.setForeground(new java.awt.Color(0, 0, 0));
@@ -84,10 +94,12 @@ public class CadastroClient extends javax.swing.JFrame {
         campoSenha.setBackground(new java.awt.Color(255, 255, 255));
         campoSenha.setForeground(new java.awt.Color(0, 0, 0));
         campoSenha.setToolTipText("Digite sua senha");
+        campoSenha.setPreferredSize(new java.awt.Dimension(15, 24));
 
         campoConfirmarSenha.setBackground(new java.awt.Color(255, 255, 255));
         campoConfirmarSenha.setForeground(new java.awt.Color(0, 0, 0));
         campoConfirmarSenha.setToolTipText("Confirme sua senha");
+        campoConfirmarSenha.setPreferredSize(new java.awt.Dimension(15, 24));
 
         jLabel1.setBackground(new java.awt.Color(204, 204, 204));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -95,6 +107,7 @@ public class CadastroClient extends javax.swing.JFrame {
         jLabel1.setText("CPF");
 
         campoCPF.setBackground(new java.awt.Color(255, 255, 255));
+        campoCPF.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         campoCPF.setForeground(new java.awt.Color(0, 0, 0));
         try {
             campoCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -102,6 +115,7 @@ public class CadastroClient extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         campoCPF.setToolTipText("Digite seu CPF");
+        campoCPF.setPreferredSize(new java.awt.Dimension(15, 24));
 
         textoEndereco.setBackground(new java.awt.Color(204, 204, 204));
         textoEndereco.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -118,6 +132,7 @@ public class CadastroClient extends javax.swing.JFrame {
         textoCelular.setText("N* Celular");
 
         campoCelular.setBackground(new java.awt.Color(255, 255, 255));
+        campoCelular.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         campoCelular.setForeground(new java.awt.Color(0, 0, 0));
         try {
             campoCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
@@ -125,30 +140,34 @@ public class CadastroClient extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         campoCelular.setToolTipText("Digite seu numero de celular");
+        campoCelular.setPreferredSize(new java.awt.Dimension(15, 24));
 
-        botaoVoltar.setBackground(new java.awt.Color(255, 255, 255));
+        botaoVoltar.setBackground(new java.awt.Color(255, 204, 153));
         botaoVoltar.setForeground(new java.awt.Color(0, 0, 0));
         botaoVoltar.setText("Voltar");
         botaoVoltar.setToolTipText("Voltar para a Tela de Login");
+        botaoVoltar.setBorder(null);
         botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoVoltarActionPerformed(evt);
             }
         });
 
-        botaoCadastrar.setBackground(new java.awt.Color(255, 255, 255));
+        botaoCadastrar.setBackground(new java.awt.Color(255, 204, 153));
         botaoCadastrar.setForeground(new java.awt.Color(0, 0, 0));
         botaoCadastrar.setText("Cadastrar");
+        botaoCadastrar.setBorder(null);
         botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCadastrarActionPerformed(evt);
             }
         });
 
-        botaoSair.setBackground(new java.awt.Color(255, 255, 255));
+        botaoSair.setBackground(new java.awt.Color(255, 204, 153));
         botaoSair.setForeground(new java.awt.Color(0, 0, 0));
         botaoSair.setText("Sair");
         botaoSair.setToolTipText("Sair do aplicativo");
+        botaoSair.setBorder(null);
         botaoSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSairActionPerformed(evt);
@@ -166,77 +185,138 @@ public class CadastroClient extends javax.swing.JFrame {
         textoStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         textoStatus.setText("Aguardando preenchimento...");
 
+        checkboxSenha.setBackground(new java.awt.Color(255, 255, 255));
         checkboxSenha.setForeground(new java.awt.Color(0, 0, 0));
         checkboxSenha.setText("Mostrar senhas");
+        checkboxSenha.setBorder(null);
         checkboxSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkboxSenhaActionPerformed(evt);
             }
         });
 
-        botaoLimpar.setBackground(new java.awt.Color(255, 255, 255));
+        botaoLimpar.setBackground(new java.awt.Color(255, 204, 153));
         botaoLimpar.setForeground(new java.awt.Color(0, 0, 0));
         botaoLimpar.setText("Limpar");
+        botaoLimpar.setBorder(null);
         botaoLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoLimparActionPerformed(evt);
             }
         });
 
+        jPanel2.setBackground(new java.awt.Color(255, 204, 153));
+
+        textoTitulo4.setFont(new java.awt.Font("Cooper Black", 0, 36)); // NOI18N
+        textoTitulo4.setForeground(new java.awt.Color(255, 255, 255));
+        textoTitulo4.setText("TELA DE CADASTRO");
+
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel3.setFont(new java.awt.Font("Lucida Calligraphy", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("BurguerBOT");
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/pergunta-online.png"))); // NOI18N
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/NOME.png"))); // NOI18N
+
+        textoTitulo5.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        textoTitulo5.setForeground(new java.awt.Color(255, 255, 255));
+        textoTitulo5.setText("All rights reserved for BurguerBOT FastFood Company LTDA");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(201, 201, 201)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(textoTitulo4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textoTitulo5)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(85, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(119, 119, 119))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(textoTitulo4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(textoTitulo5)
+                .addGap(15, 15, 15))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(botaoVoltar)
-                .addGap(62, 62, 62)
-                .addComponent(textoCadastro)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(59, 59, 59))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel1)
-                                .addComponent(textoNomeUsuario)
-                                .addComponent(campoNomeUsuario)
-                                .addComponent(textoSenha)
-                                .addComponent(campoSenha)
-                                .addComponent(campoCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(textoStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(206, 206, 206))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57)
-                                .addComponent(botaoLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(textoEndereco)
-                                .addComponent(campoEndereco)
-                                .addComponent(textoConfirmarSenha)
-                                .addComponent(campoConfirmarSenha)
-                                .addComponent(textoCelular)
-                                .addComponent(campoCelular, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                            .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(checkboxSenha))
+                                .addGap(32, 32, 32)
+                                .addComponent(botaoLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(102, 102, 102))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(198, 198, 198)
-                        .addComponent(textoStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel1)
+                                        .addComponent(textoNomeUsuario)
+                                        .addComponent(campoNomeUsuario)
+                                        .addComponent(textoSenha)
+                                        .addComponent(campoSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(checkboxSenha))
+                                .addGap(119, 119, 119)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(textoEndereco)
+                                    .addComponent(campoEndereco)
+                                    .addComponent(textoConfirmarSenha)
+                                    .addComponent(campoConfirmarSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(textoCelular)
+                                    .addComponent(campoCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(566, 566, 566)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(14, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textoCadastro)
-                    .addComponent(botaoVoltar)
-                    .addComponent(jLabel2))
-                .addGap(50, 50, 50)
+                .addContainerGap()
+                .addComponent(botaoVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -258,32 +338,30 @@ public class CadastroClient extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoSenha)
                     .addComponent(textoConfirmarSenha))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkboxSenha))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(textoStatus)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(botaoLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(39, 39, 39))
+                    .addComponent(campoConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(checkboxSenha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(textoStatus)
+                .addGap(2, 2, 2)
+                .addComponent(jLabel2)
+                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -468,13 +546,20 @@ public class CadastroClient extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkboxSenha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel textoCadastro;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel textoCelular;
     private javax.swing.JLabel textoConfirmarSenha;
     private javax.swing.JLabel textoEndereco;
     private javax.swing.JLabel textoNomeUsuario;
     private javax.swing.JLabel textoSenha;
     private javax.swing.JLabel textoStatus;
+    private javax.swing.JLabel textoTitulo2;
+    private javax.swing.JLabel textoTitulo3;
+    private javax.swing.JLabel textoTitulo4;
+    private javax.swing.JLabel textoTitulo5;
     // End of variables declaration//GEN-END:variables
 }
