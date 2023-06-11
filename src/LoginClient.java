@@ -255,7 +255,9 @@ public class LoginClient extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSairActionPerformed
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-        // TODO add your handling code here:
+        CadastroClient cadastroClient = new CadastroClient();  // Cria uma instância da tela de cadastro
+        cadastroClient.setVisible(true);  // Torna a tela de cadastro visível
+        this.dispose();  // Fecha a tela de login
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     /**

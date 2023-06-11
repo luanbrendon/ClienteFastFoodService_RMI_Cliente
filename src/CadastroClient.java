@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
 /**
  *
  * @author User
@@ -287,9 +291,34 @@ public class CadastroClient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
+    private FastFoodService connectToServerRMI() throws RemoteException {
+        try {
+            Registry registry = LocateRegistry.getRegistry("localhost", 4444);
+            return (FastFoodService) registry.lookup("FastFoodService");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RemoteException("Falha ao conectar-se ao servidor RMI.");
+        }
+    }
 
-            
+    private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
+            String usuario = campoNomeUsuario.getText();
+            String senha1 = String.valueOf(campoSenha.getPassword());
+
+            try {
+                FastFoodService fastFoodService = connectToServerRMI();
+                boolean cadastroRealizado = fastFoodService.cadastrarUsuario(usuario, senha1);
+
+                if (cadastroRealizado) {
+                    textoStatus.setText("Cadastro realizado com sucesso....");
+                }else {
+                    textoStatus.setText("Usuário já cadastrado...");
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                textoStatus.setText("Falha ao conectar-se ao servidor RMI.");
+            }
+
         String nome_usuario = "";
         String cpf = "";
         String endereco = "";
@@ -331,7 +360,7 @@ public class CadastroClient extends javax.swing.JFrame {
             celular = this.campoCelular.getText();
         }
         
-        if (this.campoSenha.getText().length() < 4){
+        if (this.campoSenha.getPassword().length < 4){
             textoStatus.setText("Senha precisa de 4 digitos...");   
         }else{
            senha_check = true;
@@ -366,7 +395,11 @@ public class CadastroClient extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSairActionPerformed
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
-        // TODO add your handling code here:
+                LoginClient loginClient = new LoginClient();
+
+                this.setVisible(false);
+
+                loginClient.setVisible(true);
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
     /**
