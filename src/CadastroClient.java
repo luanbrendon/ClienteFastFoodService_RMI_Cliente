@@ -6,6 +6,8 @@
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -311,13 +313,21 @@ public class CadastroClient extends javax.swing.JFrame {
                 boolean cadastroRealizado = fastFoodService.cadastrarUsuario(usuario, senha1, endereco1);
 
                 if (cadastroRealizado) {
-                    textoStatus.setText("Cadastro realizado com sucesso....");
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            textoStatus.setText("Cadastro realizado com sucesso....");
+                        }
+                    }, 4000);
+
                     LoginClient loginClient = new LoginClient();
 
                     this.setVisible(false);
 
                     loginClient.setVisible(true);
                     loginClient.setLocationRelativeTo(null);
+
                 }else {
                     textoStatus.setText("Usuário já cadastrado...");
                 }
