@@ -304,13 +304,20 @@ public class CadastroClient extends javax.swing.JFrame {
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
             String usuario = campoNomeUsuario.getText();
             String senha1 = String.valueOf(campoSenha.getPassword());
+            String endereco1 = campoEndereco.getText();
 
             try {
                 FastFoodService fastFoodService = connectToServerRMI();
-                boolean cadastroRealizado = fastFoodService.cadastrarUsuario(usuario, senha1);
+                boolean cadastroRealizado = fastFoodService.cadastrarUsuario(usuario, senha1, endereco1);
 
                 if (cadastroRealizado) {
                     textoStatus.setText("Cadastro realizado com sucesso....");
+                    LoginClient loginClient = new LoginClient();
+
+                    this.setVisible(false);
+
+                    loginClient.setVisible(true);
+                    loginClient.setLocationRelativeTo(null);
                 }else {
                     textoStatus.setText("Usuário já cadastrado...");
                 }
